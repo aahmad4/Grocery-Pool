@@ -13,8 +13,8 @@ var commentSchema = new mongoose.Schema({
     {
       item: String,
       status: Boolean,
-    }
-  ]
+    },
+  ],
 });
 
 module.exports = mongoose.model("Comment", commentSchema);

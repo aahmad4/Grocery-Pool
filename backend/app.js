@@ -7,7 +7,7 @@ const authenticationRoutes = require("./routes/authentication"),
   locationRoutes = require("./routes/location"),
   postsRoutes = require("./routes/posts");
 
-require ('custom-env').env('staging')
+require("custom-env").env("staging");
 
 const url = process.env.DATABASEURL;
 mongoose.connect(url, {
@@ -28,5 +28,5 @@ if (port == null || port == "") {
   port = 8000;
 }
 app.listen(port, () => {
-    console.log("Server started on port " + port.toString());
+  console.log("Server started on port " + port.toString());
 });

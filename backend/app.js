@@ -40,7 +40,7 @@ mongoose.connect(url, {
 
 app.use("/", authenticationRoutes);
 app.use("/", locationRoutes);
-app.use("/", postsRoutes);
+app.use("/posts", postsRoutes);
 
 let port = process.env.PORT;
 if (port == null || port == "") {

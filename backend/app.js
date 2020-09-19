@@ -7,6 +7,8 @@ const authenticationRoutes = require("./routes/authentication"),
   locationRoutes = require("./routes/location"),
   postsRoutes = require("./routes/posts");
 
+require ('custom-env').env('staging')
+
 const url = process.env.DATABASEURL;
 mongoose.connect(url, {
   useNewUrlParser: true,

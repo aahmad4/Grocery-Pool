@@ -2,10 +2,10 @@ import React from "react";
 import Layout from "../components/Layout";
 import { Surface, Text } from "react-native-paper";
 
-export default function Auth(props) {
+export default function Profile(props) {
   return (
     <Layout navigation={props.navigation}>
-      <Text>Auth Page</Text>
+      <Text>Profile Page</Text>
       <Text>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Pellentesque nec nam

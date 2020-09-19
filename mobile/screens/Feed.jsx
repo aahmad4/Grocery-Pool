@@ -1,11 +1,13 @@
 import React from "react";
 import Layout from "../components/Layout";
 import { Surface, Text } from "react-native-paper";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-export default function Auth(props) {
+export default function Feed(props) {
   return (
     <Layout navigation={props.navigation}>
-      <Text>Auth Page</Text>
+      <Text>Feed Page</Text>
       <Text>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Pellentesque nec nam

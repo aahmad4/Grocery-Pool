@@ -16,11 +16,6 @@ mongoose.connect(url, {
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-
-app.get("/", (req, res) => {
-  res.json("Hello");
-});
 
 app.use("/", authenticationRoutes);
 app.use("/", locationRoutes);
@@ -30,4 +25,6 @@ let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8000;
 }
-app.listen(port);
+app.listen(port, () => {
+    console.log("Server started on port " + port.toString());
+});

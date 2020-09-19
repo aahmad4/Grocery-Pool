@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/", isLoggedIn, (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const address_going_to = {
@@ -21,11 +21,15 @@ router.post("/", (req, res) => {
     State: req.body.address_going_to.state,
     Postal_code: req.body.address_going_to.postal_code,
   };
-
+  const author = {
+    id: req.user._id,
+    username: req.user.username,
+  };
   const newPost = {
     title: title,
     description: description,
     address_going_to: address_going_to,
+    author: author,
   };
 
   Post.create(newPost, (err, newlycreatedPost) => {

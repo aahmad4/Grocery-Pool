@@ -10,7 +10,8 @@ const express = require("express"),
 
 const authenticationRoutes = require("./routes/authentication"),
   locationRoutes = require("./routes/location"),
-  postsRoutes = require("./routes/posts");
+  postsRoutes = require("./routes/posts"),
+  commentRoutes = require("./routes/comments");
 
 require("custom-env").env("staging");
 
@@ -41,6 +42,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use("/", authenticationRoutes);
 app.use("/", locationRoutes);
 app.use("/posts", postsRoutes);
+app.use("/posts/:id/comments", commentRoutes);
 
 let port = process.env.PORT;
 if (port == null || port == "") {

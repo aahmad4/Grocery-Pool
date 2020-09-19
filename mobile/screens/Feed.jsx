@@ -52,7 +52,15 @@ export default function Feed(props) {
         Create New Post
       </Button>
       {posts.map((post) => (
-        <Post key={post._id} data={post} {...props} />
+        <Surface key={post._id + "_surface"}>
+          <Post key={post._id} data={post} {...props} />
+          <Button
+            key={post._id + "_btn"}
+            onPress={() => props.navigation.navigate(ScreenRoutes.PostDetail)}
+          >
+            View Details
+          </Button>
+        </Surface>
       ))}
     </Layout>
   );

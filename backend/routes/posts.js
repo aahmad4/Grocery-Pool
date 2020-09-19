@@ -63,10 +63,10 @@ router.put("/:id", checkOwnership, (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const address_going_to = {
-    Street: req.body.address_going_to["street"],
-    City: req.body.address_going_to["city"],
-    State: req.body.address_going_to["state"],
-    Postal_code: req.body.address_going_to["postal_code"],
+    Street: req.body.address_going_to.street,
+    City: req.body.address_going_to.city,
+    State: req.body.address_going_to.state,
+    Postal_code: req.body.address_going_to.postal_code,
   };
 
   const newUpdatedPost = {

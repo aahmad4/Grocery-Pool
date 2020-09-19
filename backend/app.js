@@ -3,7 +3,11 @@ const express = require("express"),
   mongoose = require("mongoose"),
   bodyParser = require("body-parser");
 
-var url = process.env.DATABASEURL;
+const authenticationRoutes = require("./routes/authentication"),
+  locationRoutes = require("./routes/location"),
+  postsRoutes = require("./routes/posts");
+
+const url = process.env.DATABASEURL;
 mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -17,6 +21,10 @@ app.use(methodOverride("_method"));
 app.get("/", (req, res) => {
   res.json("Hello");
 });
+
+app.use("/", authenticationRoutes);
+app.use("/", locationRoutes);
+app.use("/", postsRoutes);
 
 let port = process.env.PORT;
 if (port == null || port == "") {

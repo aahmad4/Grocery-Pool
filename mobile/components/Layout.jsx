@@ -5,9 +5,7 @@ import { Surface } from "react-native-paper";
 export default function Layout(props) {
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <Surface>{props.children}</Surface>
-      </ScrollView>
+      <ScrollView style={styles.scrollView}>{props.children}</ScrollView>
     </SafeAreaView>
   );
 }
@@ -17,6 +15,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {
-    backgroundColor: "pink",
+    backgroundColor: "#FFF",
   },
 });

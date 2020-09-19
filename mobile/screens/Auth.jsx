@@ -1,37 +1,123 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Surface, Text } from "react-native-paper";
+import { Colors, Surface, Text, Title, Button } from "react-native-paper";
+import { StyleSheet, ImageBackground, View } from "react-native";
+import Logo from "../components/Logo";
+import { ScreenRoutes } from "../ScreenRoutes";
+
+import Background from "../assets/background-3.jpg";
 
 export default function Auth(props) {
   return (
     <Layout navigation={props.navigation}>
-      <Text>Auth Page</Text>
-      <Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Pellentesque nec nam
-        aliquam sem et tortor. Duis at consectetur lorem donec massa sapien.
-        Dictum fusce ut placerat orci nulla. Feugiat in fermentum posuere urna.
-        Enim tortor at auctor urna nunc id cursus. Adipiscing elit pellentesque
-        habitant morbi tristique senectus et netus. Quis hendrerit dolor magna
-        eget. Velit egestas dui id ornare arcu. Quisque id diam vel quam
-        elementum pulvinar etiam non quam. Mi sit amet mauris commodo quis.
-        Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget.
-        Tortor pretium viverra suspendisse potenti nullam. Amet mauris commodo
-        quis imperdiet massa tincidunt nunc pulvinar sapien. Eu facilisis sed
-        odio morbi quis commodo odio. Scelerisque purus semper eget duis at
-        tellus at. Consequat mauris nunc congue nisi vitae suscipit tellus
-        mauris. Faucibus turpis in eu mi bibendum neque egestas. Adipiscing
-        commodo elit at imperdiet dui. Justo donec enim diam vulputate ut
-        pharetra. Urna nunc id cursus metus aliquam eleifend mi in nulla. Etiam
-        sit amet nisl purus in mollis nunc. Laoreet sit amet cursus sit amet
-        dictum sit. Risus feugiat in ante metus. Platea dictumst quisque
-        sagittis purus sit amet volutpat. Ut sem viverra aliquet eget sit amet
-        tellus cras. Pretium aenean pharetra magna ac placerat vestibulum lectus
-        mauris. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus
-        a. Nam aliquam sem et tortor. Quisque non tellus orci ac auctor augue
-        mauris augue neque. Mattis ullamcorper velit sed ullamcorper morbi
-        tincidunt ornare. Felis eget velit aliquet sagittis id consectetur purus
-      </Text>
+      <ImageBackground
+        source={Background}
+        style={styles.background}
+        imageStyle={{
+          opacity: 0.9,
+        }}
+      >
+        <Surface style={styles.logo}>
+          <Logo />
+        </Surface>
+        <View style={styles.container}>
+          <Title style={styles.title}>Grocery Pool</Title>
+          <Text style={styles.description}>
+            We revolutionize your grocery experience
+          </Text>
+        </View>
+      </ImageBackground>
+      <Surface style={styles.navigation}>
+        <Surface style={styles.buttonContainer}>
+          <Button
+            icon="email"
+            color={Colors.blue900}
+            mode="contained"
+            style={styles.emailButton}
+          >
+            Login with Email
+          </Button>
+        </Surface>
+        <Surface style={styles.buttonContainer}>
+          <Button
+            icon="google"
+            color={Colors.blue900}
+            mode="contained"
+            style={styles.googleButton}
+          >
+            Login with Google
+          </Button>
+        </Surface>
+        <Surface style={styles.signupLinkContainer}>
+          <Text>
+            Don't have an account?{"  "}
+            <Text
+              style={styles.signupLink}
+              onPress={() => props.navigation.navigate(ScreenRoutes.Register)}
+            >
+              Signup
+            </Text>
+          </Text>
+        </Surface>
+      </Surface>
     </Layout>
   );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    width: "100%",
+    marginBottom: 30,
+  },
+  logo: {
+    marginTop: "50%",
+    marginBottom: "20%",
+  },
+  container: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "80%",
+    marginVertical: 30,
+    paddingBottom: 20,
+  },
+  title: {
+    fontSize: 40,
+    padding: 10,
+    color: "#FFF",
+  },
+  description: {
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#FFF",
+  },
+  navigation: {
+    marginTop: 10,
+  },
+  buttonContainer: {
+    width: "80%",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  googleButton: {
+    marginBottom: 20,
+    paddingVertical: 5,
+  },
+  emailButton: {
+    marginBottom: 20,
+    paddingVertical: 5,
+  },
+  signupLinkContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  signupLink: {
+    textDecorationLine: "underline",
+    fontSize: 15,
+  },
+});

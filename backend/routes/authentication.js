@@ -1,7 +1,6 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
-
 const User = require("../models/user");
 
 const isLoggedIn = (request, response, next) => {
@@ -24,7 +23,7 @@ router.post("/register", (req, res) => {
     password,
     (err, user) => {
       if (err) {
-        console.log(err);
+        console.log("Error: " + err);
         return res.status(500).json({ error: err });
       } else {
         return res.json({ user: user });

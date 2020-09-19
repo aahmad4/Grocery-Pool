@@ -46,9 +46,10 @@ const styles = StyleSheet.create({
     marginTop: "50%",
   },
   logoContainer: {
-    marginBottom: 20,
+    marginBottom: 60,
   },
   title: {
+    marginTop: 15,
     fontSize: 32,
     textAlign: "center",
     padding: 10,

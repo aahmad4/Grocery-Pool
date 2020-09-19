@@ -1,13 +1,24 @@
-import React from "react";
-import Layout from "../components/Layout";
-import { Colors, Surface, Text, Title, Button } from "react-native-paper";
+import React, { useState } from "react";
+import {
+  Colors,
+  Surface,
+  Text,
+  Title,
+  Button,
+  Modal,
+  Provider,
+  Portal,
+} from "react-native-paper";
 import { StyleSheet, ImageBackground, View } from "react-native";
+import Layout from "../components/Layout";
 import Logo from "../components/Logo";
 import { ScreenRoutes } from "../ScreenRoutes";
-
 import Background from "../assets/background-3.jpg";
+import { googleAuth } from "../api/googleAuth";
 
 export default function Auth(props) {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <Layout navigation={props.navigation}>
       <ImageBackground
@@ -16,6 +27,7 @@ export default function Auth(props) {
         imageStyle={{
           opacity: 0.9,
         }}
+        progressiveRenderingEnabled={true}
       >
         <Surface style={styles.logo}>
           <Logo />
@@ -34,6 +46,7 @@ export default function Auth(props) {
             color={Colors.blue900}
             mode="contained"
             style={styles.emailButton}
+            onPress={() => props.navigation.navigate(ScreenRoutes.Login)}
           >
             Login with Email
           </Button>
@@ -44,6 +57,13 @@ export default function Auth(props) {
             color={Colors.blue900}
             mode="contained"
             style={styles.googleButton}
+            loading={isLoading}
+            onPress={() => {
+              setIsLoading(true);
+              googleAuth().then(() => {
+                setIsLoading(false);
+              });
+            }}
           >
             Login with Google
           </Button>

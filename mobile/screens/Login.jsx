@@ -1,40 +1,148 @@
 import React from "react";
-import useSWR from "swr";
-import loginUser from "../api/login";
 import Layout from "../components/Layout";
-import { Surface, Text } from "react-native-paper";
+import {
+  Colors,
+  Surface,
+  Text,
+  Title,
+  TextInput,
+  Button,
+} from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import { Formik } from "formik";
+import { ScreenRoutes } from "../ScreenRoutes";
+import { useNavigation } from "@react-navigation/native";
+import * as Yup from "yup";
 
-export default function Login(props) {
-  const { user, error } = useSWR("login", loginUser);
+const SignupSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  name: Yup.string().required("Name is required"),
+  password: Yup.string()
+    .min(3, "Minimum password length is 3")
+    .max(255, "Maximum password length is 255")
+    .required("Password is required"),
+});
+
+export default function Register(props) {
+  const navigation = useNavigation();
+
   return (
     <Layout navigation={props.navigation}>
-      <Text>Login Page</Text>
-      <Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Pellentesque nec nam
-        aliquam sem et tortor. Duis at consectetur lorem donec massa sapien.
-        Dictum fusce ut placerat orci nulla. Feugiat in fermentum posuere urna.
-        Enim tortor at auctor urna nunc id cursus. Adipiscing elit pellentesque
-        habitant morbi tristique senectus et netus. Quis hendrerit dolor magna
-        eget. Velit egestas dui id ornare arcu. Quisque id diam vel quam
-        elementum pulvinar etiam non quam. Mi sit amet mauris commodo quis.
-        Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget.
-        Tortor pretium viverra suspendisse potenti nullam. Amet mauris commodo
-        quis imperdiet massa tincidunt nunc pulvinar sapien. Eu facilisis sed
-        odio morbi quis commodo odio. Scelerisque purus semper eget duis at
-        tellus at. Consequat mauris nunc congue nisi vitae suscipit tellus
-        mauris. Faucibus turpis in eu mi bibendum neque egestas. Adipiscing
-        commodo elit at imperdiet dui. Justo donec enim diam vulputate ut
-        pharetra. Urna nunc id cursus metus aliquam eleifend mi in nulla. Etiam
-        sit amet nisl purus in mollis nunc. Laoreet sit amet cursus sit amet
-        dictum sit. Risus feugiat in ante metus. Platea dictumst quisque
-        sagittis purus sit amet volutpat. Ut sem viverra aliquet eget sit amet
-        tellus cras. Pretium aenean pharetra magna ac placerat vestibulum lectus
-        mauris. Semper feugiat nibh sed pulvinar proin gravida hendrerit lectus
-        a. Nam aliquam sem et tortor. Quisque non tellus orci ac auctor augue
-        mauris augue neque. Mattis ullamcorper velit sed ullamcorper morbi
-        tincidunt ornare. Felis eget velit aliquet sagittis id consectetur purus
-      </Text>
+      <Surface style={styles.container}>
+        <Title style={styles.title}>Welcome back!</Title>
+        <Text style={styles.description}>
+          Enter your credentials to continue
+        </Text>
+        <Surface style={styles.formContainer}>
+          <Formik
+            onSubmit={(values) => {
+              /**
+               * Send Signup/register Axios Request here to API
+               */
+              console.log(values);
+            }}
+            validationSchema={SignupSchema}
+            initialValues={{
+              email: "",
+              password: "",
+            }}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <View>
+                <View style={styles.form}>
+                  <TextInput
+                    mode="outlined"
+                    label="Email"
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
+                    value={values.email}
+                  />
+                  {errors.email && touched.email ? (
+                    <Text style={styles.error}>{errors.email}</Text>
+                  ) : null}
+                </View>
+                <View style={styles.form}>
+                  <TextInput
+                    mode="outlined"
+                    label="Password"
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    value={values.password}
+                  />
+                  {errors.password && touched.password ? (
+                    <Text style={styles.error}>{errors.password}</Text>
+                  ) : null}
+                </View>
+                <Button
+                  onPress={handleSubmit}
+                  mode="contained"
+                  color={Colors.blue900}
+                  style={styles.button}
+                >
+                  Sign in
+                </Button>
+              </View>
+            )}
+          </Formik>
+        </Surface>
+        <Surface style={styles.authLinkContainer}>
+          <Text>
+            Don't have an account?{"  "}
+            <Text
+              style={styles.authLink}
+              onPress={() => navigation.navigate(ScreenRoutes.Auth)}
+            >
+              Register
+            </Text>
+          </Text>
+        </Surface>
+      </Surface>
     </Layout>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 60,
+    paddingHorizontal: 30,
+  },
+  title: {
+    fontSize: 28,
+  },
+  description: {
+    fontSize: 16,
+  },
+  formContainer: {
+    marginTop: 60,
+    marginBottom: 30,
+  },
+  form: {
+    marginBottom: 20,
+  },
+  button: {
+    marginTop: 20,
+  },
+  authLinkContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  authLink: {
+    textDecorationLine: "underline",
+    fontSize: 15,
+  },
+  error: {
+    marginTop: 3,
+    marginLeft: 8,
+    color: "red",
+  },
+});

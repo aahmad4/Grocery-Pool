@@ -4,25 +4,9 @@ const express = require("express"),
   bodyParser = require("body-parser"),
   session = require("express-session"),
   passport = require("passport"),
+  LocalStrategy = require("passport-local"),
+  User = require("./models/user"),
   passportLocalMongoose = require("passport-local-mongoose");
-
-app.use(
-  session({
-    secret: "totally secret",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
-
-const User = require("./models/user");
-
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 const authenticationRoutes = require("./routes/authentication"),
   locationRoutes = require("./routes/location"),
@@ -37,6 +21,22 @@ mongoose.connect(url, {
   useCreateIndex: true,
   useFindAndModify: false,
 });
+
+app.use(
+  require("express-session")({
+    secret: "totally secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use("/", authenticationRoutes);
 app.use("/", locationRoutes);

@@ -29,6 +29,7 @@ export default function PostForm(props) {
   const navigation = useNavigation();
   const author = "author"; /* logged in UserID*/
   const post = props.route.params.post;
+  console.log(post);
 
   return (
     <Layout navigation={props.navigation}>
@@ -44,9 +45,9 @@ export default function PostForm(props) {
             }}
             validationSchema={PostCreateSchema}
             initialValues={{
-              title: "",
-              description: "",
-              address: "",
+              title: post.title ? post.title : "",
+              description: post.description ? post.description : "",
+              address: post.address ? post.address : "",
             }}
           >
             {({

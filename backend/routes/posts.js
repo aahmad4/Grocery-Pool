@@ -13,9 +13,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/author/:id", (req, res) => {
-  Post.find({
-    author: { id: req.params.id, username: req.params.username },
-  }).exec((err, posts) => {
+  Post.find({ author: req.body.user }).exec((err, posts) => {
     if (err) {
       console.log("Error: " + err);
     } else {
@@ -25,19 +23,12 @@ router.get("/author/:id", (req, res) => {
 });
 
 router.post("/", isLoggedIn, (req, res) => {
-  const title = req.body.title;
-  const description = req.body.description;
-  const address = req.body.address;
-  const author = {
-    id: req.user._id,
-    username: req.user.username,
-  };
   const date = new Date(Date.now());
   const newPost = {
-    title: title,
-    description: description,
-    address: address,
-    author: author,
+    title: req.body.title,
+    description: req.body.description,
+    address: req.body.address,
+    author: req.body.user,
     created_at: date.getTime(),
   };
 
@@ -60,16 +51,6 @@ router.get("/:id", (req, res) => {
         res.json(foundPost);
       }
     });
-});
-
-router.get("/:id/edit", checkOwnership, (req, res) => {
-  Post.findById(req.params.id, (err, foundPost) => {
-    if (err) {
-      console.log("Error: " + err);
-    } else {
-      res.json(foundPost);
-    }
-  });
 });
 
 router.put("/:id", checkOwnership, (req, res) => {

@@ -14,9 +14,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/author/:id", (req, res) => {
-  Comment.find({
-    author: { id: req.params.id, username: req.params.username },
-  }).exec((err, posts) => {
+  Comment.find({ author: req.body.user }).exec((err, posts) => {
     if (err) {
       console.log("Error: " + err);
     } else {
@@ -26,12 +24,13 @@ router.get("/author/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  Post.findById(req.params.id, (err, post) => {
+  Post.findById(req.params.post_id, (err, post) => {
     if (err) {
       console.log("Error: " + err);
     } else {
       const newComment = {
         description: req.body.description,
+        author: req.body.user,
       };
 
       Comment.create(newComment, (err, comment) => {
@@ -51,10 +50,8 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", checkOwnership, (req, res) => {
-  const description = req.body.description;
-
   const newUpdatedComment = {
-    description: description,
+    description: req.body.description,
   };
   Comment.findByIdAndUpdate(
     req.params.id,

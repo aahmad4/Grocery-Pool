@@ -15,23 +15,23 @@ export function getPostById(id) {
     .catch((err) => console.log(err));
 }
 
-export function createNewPost(body) {
+export function createNewPost(body, user) {
   axios
-    .post(`${BACKEND_URL}/posts/`, body)
+    .post(`${BACKEND_URL}/posts/`, body, user)
     .then((res) => res.json())
     .catch((err) => console.log(err));
 }
 
-export function updatePost(body, id) {
+export function updatePost(body, id, user) {
   axios
-    .put(`${BACKEND_URL}/posts/${id}`, body, id)
+    .put(`${BACKEND_URL}/posts/${id}`, body, id, user)
     .then((res) => res.json())
     .catch((err) => console.log(err));
 }
 
-export function getPostsByAuthor(id, username) {
+export function getPostsByAuthor(id, user) {
   axios
-    .get(`${BACKEND_URL}/posts/author/${id}`, id, username)
+    .get(`${BACKEND_URL}/posts/author/${id}`, user)
     .then((res) => res.json())
     .catch((err) => console.log(err));
 }

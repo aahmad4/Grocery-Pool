@@ -15,13 +15,13 @@ import { StyleSheet, View } from "react-native";
 
 const PostCreateSchema = Yup.object().shape({
   title: Yup.string()
-    .required("Title is required")
-    .min(5, "Minimum length is 5")
-    .max(255, "Maximum Length Exceeded"),
+    .min(2, "Title must be at least 2 characters long")
+    .max(255, "Maximum Length Exceeded")
+    .required("Title is required"),
   description: Yup.string()
-    .required("Description is required")
-    .min(5, "Minimum length is 5")
-    .max(255, "Maximum Length Exceeded"),
+    .min(2, "Description must be at least 2 characters long")
+    .max(255, "Maximum Length Exceeded")
+    .required("Description is required"),
   address: Yup.string().required("Address is required"),
 });
 
@@ -44,7 +44,11 @@ export default function PostForm(props) {
               console.log(values);
             }}
             validationSchema={PostCreateSchema}
-            initialValues={post}
+            initialValues={{
+              title: post.title ? post.title : "",
+              description: post.description ? post.description : "",
+              address: post.address ? post.address : "",
+            }}
           >
             {({
               handleChange,
@@ -58,10 +62,10 @@ export default function PostForm(props) {
                 <View style={styles.form}>
                   <TextInput
                     mode="outlined"
-                    label="title"
+                    label="Title"
                     type="text"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    onChangeText={handleChange("title")}
+                    onBlur={handleBlur("title")}
                     value={values.title}
                     name="title"
                   />
@@ -72,10 +76,10 @@ export default function PostForm(props) {
                 <View style={styles.form}>
                   <TextInput
                     mode="outlined"
-                    label="description"
+                    label="Description"
                     type="text"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    onChangeText={handleChange("description")}
+                    onBlur={handleBlur("description")}
                     value={values.description}
                     name="description"
                   />
@@ -86,10 +90,10 @@ export default function PostForm(props) {
                 <View style={styles.form}>
                   <TextInput
                     mode="outlined"
-                    label="address"
+                    label="Address"
                     type="text"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
+                    onChangeText={handleChange("address")}
+                    onBlur={handleBlur("address")}
                     value={values.address}
                     name="address"
                   />

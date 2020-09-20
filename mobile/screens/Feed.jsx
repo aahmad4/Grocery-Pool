@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
-import { Surface, Text, Button, Avatar, Title } from "react-native-paper";
+import {
+  Text,
+  Button,
+  Avatar,
+  Title,
+  Colors,
+  Divider,
+} from "react-native-paper";
 import Post from "./Post";
-import { useNavigation } from "@react-navigation/native";
 import { ScreenRoutes } from "../ScreenRoutes";
-import { View, StyleSheet, AsyncStorage } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { getSelfUser } from "../utils/getSelfUser";
 import NativeIcon from "../components/NativeIcon";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const defaultValues = {
   title: "",
@@ -17,10 +24,16 @@ const defaultValues = {
 const postsData = [
   {
     _id: 1,
-    title: "Post 1",
-    description: "This is post 1",
+    title: "Binge @Kroger",
+    description: "Going to Kroger at 5 today. Hit me up if you need anything!",
     address: "1000 Location Pkway, Austin, TX",
-    author: "author 1",
+    createdAt: "8:43 PM",
+    author: {
+      _id: "1",
+      name: "Darlene Alderson",
+      imageUrl:
+        "https://vignette.wikia.nocookie.net/mr-robot/images/f/ff/Darlene_Alderson.png/revision/latest?cb=20170520170749&path-prefix=fr",
+    },
     comments: [
       {
         _id: 11,
@@ -31,10 +44,16 @@ const postsData = [
   },
   {
     _id: 2,
-    title: "Post 2",
-    description: "This is post 2",
+    title: "Walmart Shopping",
+    description: "Going to walmart tomorrow at 6pm",
     address: "2000 Location Dr, Houston, TX",
-    author: "author 2",
+    createdAt: "3:34 AM",
+    author: {
+      _id: "2",
+      name: "Elliot Alderson",
+      imageUrl:
+        "https://vignette.wikia.nocookie.net/mr-robot/images/6/6e/Elliot_Alderson_(infobox).png/revision/latest?cb=20170520171651&path-prefix=fr",
+    },
     comments: [
       {
         _id: 12,
@@ -54,8 +73,6 @@ export default function Feed(props) {
   const [posts, setPosts] = useState(postsData);
   const [user, setUser] = useState(null);
 
-  const navigation = useNavigation();
-
   useEffect(() => {
     /**
      * Fetch Posts from API here
@@ -64,7 +81,7 @@ export default function Feed(props) {
 
   useEffect(() => {
     getSelfUser().then((selfUser) => {
-      if (selfUser === null) navigation.navigate(ScreenRoutes.Auth);
+      if (selfUser === null) props.navigation.navigate(ScreenRoutes.Auth);
       else setUser(selfUser);
     });
   }, []);
@@ -81,32 +98,28 @@ export default function Feed(props) {
               Keep your groceries in check!
             </Text>
           </View>
-          <View
+          <TouchableOpacity
             onPress={() => {
-              console.log("navigatin");
-              navigation.navigate(ScreenRoutes.Profile);
-              console.log("wot");
+              props.navigation.navigate(ScreenRoutes.Profile);
             }}
           >
             <Avatar.Image
               style={styles.headerAvatar}
-              size={50}
+              size={55}
               source={require("../assets/person.jpg")}
             />
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.locationContainer}>
           <NativeIcon name="location-on" size={18} />
-          <Text>
-            {"  "}
-            {user?.address}
-          </Text>
+          <Text> {user?.address}</Text>
         </View>
         <View style={styles.postTitleContainer}>
           <Title style={styles.postTitle}>Posts</Title>
           <Button
             mode="contained"
             compact
+            color={Colors.blue900}
             onPress={() =>
               props.navigation.navigate(ScreenRoutes.PostForm, {
                 post: defaultValues,
@@ -114,31 +127,25 @@ export default function Feed(props) {
               })
             }
           >
-            Create New Post
+            New Post
           </Button>
         </View>
       </View>
-
-      {posts.map((post) => (
-        <Surface key={post._id + "_surface"}>
-          <Post key={post._id} data={post} {...props} />
-          <Button
-            key={post._id + "_btn"}
-            onPress={() =>
-              props.navigation.navigate(ScreenRoutes.PostDetail, { post: post })
-            }
-          >
-            View Details
-          </Button>
-        </Surface>
-      ))}
+      <View style={styles.postContainer}>
+        {posts.map((post) => (
+          <View key={post._id}>
+            <Post key={post._id} data={post} {...props} />
+            <Divider style={styles.divider} />
+          </View>
+        ))}
+      </View>
     </Layout>
   );
 }
 
 const styles = StyleSheet.create({
   initialContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 18,
   },
   headerContainer: {
     marginTop: 12,
@@ -164,7 +171,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   postTitleContainer: {
-    marginTop: 20,
+    marginVertical: 20,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -173,5 +180,11 @@ const styles = StyleSheet.create({
   postTitle: {
     fontSize: 28,
   },
-  postCreateButton: {},
+  postContainer: {
+    marginTop: 20,
+    paddingHorizontal: 10,
+  },
+  divider: {
+    marginVertical: 20,
+  },
 });

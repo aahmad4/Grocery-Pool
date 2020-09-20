@@ -1,5 +1,5 @@
 <p align="center"> 
-  <img src="logo.png" align="" alt="Logo">
+  <img src="logo.png" align="" alt="Logo" height="243px" width="236px">
 </p>
  
 <h1 align="center">Grocery Pool</h1> 

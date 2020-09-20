@@ -8,6 +8,10 @@
 A mobile application that helps limit social interaction outside by allowing individuals to request shoppers to pick up items for them.
 </p>
 
+## Screenshots
+
+![](grocery_pool_feed.jpg)
+
 ## Features 
 
 * Users register with email and password as well as their address

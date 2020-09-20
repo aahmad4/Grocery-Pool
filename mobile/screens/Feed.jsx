@@ -12,6 +12,12 @@ import Post from "./Post";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenRoutes } from "../ScreenRoutes";
 
+const defaultValues = {
+  title: "",
+  description: "",
+  address: "",
+};
+
 export default function Feed(props) {
   /*TODO: Call backend API to populate all posts*/
   const posts = [
@@ -47,7 +53,11 @@ export default function Feed(props) {
       <Button
         mode="contained"
         compact
-        onPress={() => props.navigation.navigate(ScreenRoutes.PostForm)}
+        onPress={() =>
+          props.navigation.navigate(ScreenRoutes.PostForm, {
+            post: defaultValues,
+          })
+        }
       >
         Create New Post
       </Button>

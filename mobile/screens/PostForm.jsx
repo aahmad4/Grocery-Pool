@@ -28,6 +28,8 @@ const PostCreateSchema = Yup.object().shape({
 export default function PostForm(props) {
   const navigation = useNavigation();
   const author = "author"; /* logged in UserID*/
+  const post = props.route.params.post;
+
   return (
     <Layout navigation={props.navigation}>
       <Surface style={styles.container}>
@@ -41,11 +43,7 @@ export default function PostForm(props) {
               console.log(values);
             }}
             validationSchema={PostCreateSchema}
-            initialValues={{
-              title: "",
-              description: "",
-              address: "",
-            }}
+            initialValues={post}
           >
             {({
               handleChange,

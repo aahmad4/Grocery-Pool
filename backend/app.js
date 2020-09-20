@@ -42,7 +42,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use("/", authenticationRoutes);
 app.use("/", locationRoutes);
 app.use("/posts", postsRoutes);
-app.use("/posts/:id/comments", commentRoutes);
+app.use("/comments", commentRoutes);
 
 let port = process.env.PORT;
 if (port == null || port == "") {

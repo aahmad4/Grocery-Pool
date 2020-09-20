@@ -12,31 +12,40 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/author/:id", (req, res) => {
+  Post.find({
+    author: { id: req.params.id, username: req.params.username },
+  }).exec((err, posts) => {
+    if (err) {
+      console.log("Error: " + err);
+    } else {
+      res.json(posts);
+    }
+  });
+});
+
 router.post("/", isLoggedIn, (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
-  const address_going_to = {
-    Street: req.body.address_going_to.street,
-    City: req.body.address_going_to.city,
-    State: req.body.address_going_to.state,
-    Postal_code: req.body.address_going_to.postal_code,
-  };
+  const address = req.body.address;
   const author = {
     id: req.user._id,
     username: req.user.username,
   };
+  const date = new Date(Date.now());
   const newPost = {
     title: title,
     description: description,
-    address_going_to: address_going_to,
+    address: address,
     author: author,
+    created_at: date.getTime(),
   };
 
   Post.create(newPost, (err, newlycreatedPost) => {
     if (err) {
       console.log("Error: " + err);
     } else {
-      res.redirect("/posts");
+      res.json("Post Created");
     }
   });
 });
@@ -66,33 +75,43 @@ router.get("/:id/edit", checkOwnership, (req, res) => {
 router.put("/:id", checkOwnership, (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
-  const address_going_to = {
-    Street: req.body.address_going_to.street,
-    City: req.body.address_going_to.city,
-    State: req.body.address_going_to.state,
-    Postal_code: req.body.address_going_to.postal_code,
-  };
+  const address = req.body.address;
 
   const newUpdatedPost = {
     title: title,
     description: description,
-    address_going_to: address_going_to,
+    address: address,
   };
   Post.findByIdAndUpdate(req.params.id, newUpdatedPost, (err, updatedPost) => {
     if (err) {
       console.log("Error: " + err);
     } else {
-      res.redirect("/posts" + req.params.id);
+      res.json("Post Updated");
     }
   });
 });
 
 router.delete("/:id", checkOwnership, (req, res) => {
+  /* Delete the comments first */
+  Post.findById(req.params.id, (err, foundPost) => {
+    if (err) {
+      console.log("Error: " + err);
+    } else {
+      foundPost.comments.forEach((comment) =>
+        Comment.findByIdAndRemove(comment._id, (err) => {
+          if (err) {
+            console.log("Error: " + err);
+          }
+        })
+      );
+    }
+  });
+
   Post.findByIdAndRemove(req.params.id, (err) => {
     if (err) {
       console.log("Error: " + err);
     } else {
-      res.redirect("/posts");
+      res.json("Post Deleted");
     }
   });
 });

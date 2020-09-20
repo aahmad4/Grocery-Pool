@@ -16,12 +16,8 @@ var postSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
-  address_going_to: {
-    Street: String,
-    City: String,
-    State: String,
-    Postal_code: String,
-  },
+  address: String,
+  created_at: Date,
 });
 
 module.exports = mongoose.model("Post", postSchema);

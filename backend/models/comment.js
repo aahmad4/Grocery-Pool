@@ -8,13 +8,7 @@ var commentSchema = new mongoose.Schema({
     },
     username: String,
   },
-  text: String,
-  item_picking_up_comment: [
-    {
-      item: String,
-      status: Boolean,
-    },
-  ],
+  description: String,
 });
 
 module.exports = mongoose.model("Comment", commentSchema);

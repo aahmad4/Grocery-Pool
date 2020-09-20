@@ -11,7 +11,7 @@ A mobile application that helps limit social interaction outside by allowing ind
 ## Screenshots
 
 <p align="center">
-  <img src="grocery_pool_feed.jpg">
+  <img src="grocery_pool_feed.jpg" height="1280px" width="720px">
 </p>
 
 ## Features 

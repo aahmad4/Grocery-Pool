@@ -20,6 +20,34 @@ A link to a small YouTube demo can be found here: https://www.youtube.com/watch?
 The app is currently deployed to heroku, you can check it out here: https://fakenewsify.herokuapp.com/
 </p>
 
+## Features 
+
+* Users register with email and password as well as their address
+* Registered users make posts about what store they're heading to
+* Other users can make requests to the shopper to pick up certain items
+* Requests can be accepted or rejected
+* Google Maps to determine where others are
+
+## Built With
+
+* [Node.js](https://nodejs.org/)
+* [Express](https://expressjs.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [Mongoose](http://mongoosejs.com/)
+* [Async](http://caolan.github.io/async/)
+* [Crypto](https://nodejs.org/api/crypto.html#crypto_crypto)
+* [Helmet](https://helmetjs.github.io/)
+* [Passport](http://www.passportjs.org/)
+* [Passport-local](https://github.com/jaredhanson/passport-local#passport-local)
+* [Express-session](https://github.com/expressjs/session#express-session)
+* [Method-override](https://github.com/expressjs/method-override#method-override)
+* [Nodemailer](https://nodemailer.com/about/)
+* [Moment](https://momentjs.com/)
+* [Cloudinary](https://cloudinary.com/)
+* [Geocoder](https://github.com/wyattdanger/geocoder#geocoder)
+* [Connect-flash](https://github.com/jaredhanson/connect-flash#connect-flash)
+* [RESTful API](https://restfulapi.net/)
+* [React Native](https://reactnative.dev/)
 
 ## Clone
 

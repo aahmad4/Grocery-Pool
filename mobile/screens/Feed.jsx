@@ -66,7 +66,9 @@ export default function Feed(props) {
           <Post key={post._id} data={post} {...props} />
           <Button
             key={post._id + "_btn"}
-            onPress={() => props.navigation.navigate(ScreenRoutes.PostDetail)}
+            onPress={() =>
+              props.navigation.navigate(ScreenRoutes.PostDetail, { post: post })
+            }
           >
             View Details
           </Button>

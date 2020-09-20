@@ -75,7 +75,7 @@ export default function Feed(props) {
         <View style={styles.headerContainer}>
           <View>
             <Text style={styles.headerTitle}>
-              Hi {user?.name.split(" ")[0]},
+              Hi {user?.username.split(" ")[0]},
             </Text>
             <Text style={styles.headerDescription}>
               Keep your groceries in check!
@@ -83,9 +83,7 @@ export default function Feed(props) {
           </View>
           <View
             onPress={() => {
-              console.log("navigatin");
               navigation.navigate(ScreenRoutes.Profile);
-              console.log("wot");
             }}
           >
             <Avatar.Image
@@ -119,19 +117,22 @@ export default function Feed(props) {
         </View>
       </View>
 
-      {posts.map((post) => (
-        <Surface key={post._id + "_surface"}>
-          <Post key={post._id} data={post} {...props} />
-          <Button
-            key={post._id + "_btn"}
-            onPress={() =>
-              props.navigation.navigate(ScreenRoutes.PostDetail, { post: post })
-            }
-          >
-            View Details
-          </Button>
-        </Surface>
-      ))}
+      {posts &&
+        posts.map((post) => (
+          <Surface key={post._id + "_surface"}>
+            <Post key={post._id} data={post} {...props} />
+            <Button
+              key={post._id + "_btn"}
+              onPress={() =>
+                props.navigation.navigate(ScreenRoutes.PostDetail, {
+                  post: post,
+                })
+              }
+            >
+              View Details
+            </Button>
+          </Surface>
+        ))}
     </Layout>
   );
 }

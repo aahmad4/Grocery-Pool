@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
 import {
   Colors,
@@ -7,11 +7,13 @@ import {
   Title,
   TextInput,
   Button,
+  Banner,
 } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { Formik } from "formik";
 import { ScreenRoutes } from "../ScreenRoutes";
 import { useNavigation } from "@react-navigation/native";
+import { registerUser } from "../api/register";
 import * as Yup from "yup";
 
 const SignupSchema = Yup.object().shape({
@@ -26,10 +28,25 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function Register(props) {
+  const [visible, setVisible] = useState(false);
+
   const navigation = useNavigation();
 
   return (
     <Layout navigation={props.navigation}>
+      <Banner
+        visible={visible}
+        actions={[
+          {
+            label: "Close",
+            onPress: () => setVisible(false),
+          },
+        ]}
+        icon="exclamation"
+      >
+        <Text>User with that Email or Username already exists!</Text>
+      </Banner>
+
       <Surface style={styles.container}>
         <Title style={styles.title}>Create an account</Title>
         <Text style={styles.description}>
@@ -37,13 +54,16 @@ export default function Register(props) {
         </Text>
         <Surface style={styles.formContainer}>
           <Formik
-            onSubmit={(values) => {
-              /**
-               * Send Signup/register Axios Request here to API
-               */
-              console.log(values);
+            onSubmit={async (values) => {
+              const response = await registerUser(values);
+              if (response.status === 500) {
+                setVisible(true);
+              } else {
+                navigation.navigate(ScreenRoutes.Login, {
+                  isRedirected: true,
+                });
+              }
             }}
-            validationSchema={SignupSchema}
             initialValues={{
               email: "",
               name: "",

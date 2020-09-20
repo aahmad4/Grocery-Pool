@@ -9,30 +9,58 @@ import {
   Paragraph,
 } from "react-native-paper";
 import { ScreenRoutes } from "../ScreenRoutes";
+import Comment from "./Comment";
+
+const defaultComment = {
+  description: "",
+};
 
 export default function PostDetail(props) {
   const author = "author 2"; /* Corresponds to current user */
   /* TODO:  Call backend API with postID as a parameter */
   const post = props.route.params.post;
   return (
-    <Card>
-      <Card.Title title={post.title} />
-      <Card.Content>
-        <Paragraph>{post.description}</Paragraph>
-      </Card.Content>
-      {/* {post.author == author ? () : null} */}
-      <Card.Actions>
-        <Button
-          mode="contained"
-          onPress={() =>
-            props.navigation.navigate(ScreenRoutes.PostForm, { post: post })
-          }
-        >
-          Edit
-        </Button>
-        <Button mode="contained">Delete</Button>
-      </Card.Actions>
+    <Layout navigation={props.navigation}>
+      <Card>
+        <Card.Title title={post.title} />
+        <Card.Content>
+          <Paragraph>{post.description}</Paragraph>
+        </Card.Content>
+        {/* {post.author == author ? () : null} */}
+        <Card.Actions>
+          <Button
+            mode="contained"
+            onPress={() =>
+              props.navigation.navigate(ScreenRoutes.PostForm, {
+                post: post,
+                formTitle: "Edit Post",
+              })
+            }
+          >
+            Edit
+          </Button>
+          <Button mode="contained">Delete</Button>
+        </Card.Actions>
+      </Card>
       {/* TO DO: Display Posts Comments*/}
-    </Card>
+      <Button
+        mode="contained"
+        onPress={() =>
+          props.navigation.navigate(ScreenRoutes.CommentForm, {
+            comment: defaultComment,
+            formTitle: "Leave a new Comment",
+          })
+        }
+      >
+        Leave a new comment
+      </Button>
+      {post.comments.map((comment) => (
+        <Comment
+          data={comment}
+          key={comment._id}
+          navigation={props.navigation}
+        />
+      ))}
+    </Layout>
   );
 }

@@ -10,4 +10,5 @@ export const ScreenRoutes = {
   Comment: "Comment",
   UserPosts: "UserPosts",
   UserComments: "UserComments",
+  CommentForm: "CommentForm",
 };

@@ -18,10 +18,7 @@ import UserPosts from "./screens/UserPosts";
 import UserComments from "./screens/UserComments";
 import PostForm from "./screens/PostForm";
 import { checkAuthStatus } from "./utils/checkAuthStatus";
-
-function TabBarIcon(props) {
-  return <Ionicons size={30} {...props} />;
-}
+import CommentForm from "./screens/CommentForm";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -123,6 +120,10 @@ function FeedStackScreen() {
       <FeedStack.Screen name={ScreenRoutes.PostForm} component={PostForm} />
       <FeedStack.Screen name={ScreenRoutes.Post} component={PostStackScreen} />
       <FeedStack.Screen name={ScreenRoutes.PostDetail} component={PostDetail} />
+      <FeedStack.Screen
+        name={ScreenRoutes.CommentForm}
+        component={CommentForm}
+      />
     </FeedStack.Navigator>
   );
 }

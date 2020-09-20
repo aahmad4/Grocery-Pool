@@ -31,7 +31,9 @@ export default function Feed(props) {
       author: "author 1",
       comments: [
         {
-          title: "comment 1",
+          _id: 11,
+          author: "comment author 1",
+          description: "comment 1",
         },
       ],
     },
@@ -43,8 +45,14 @@ export default function Feed(props) {
       author: "author 2",
       comments: [
         {
-          title: "comment 1",
-          title: "comment 2",
+          _id: 12,
+          author: "comment author 1",
+          description: "comment 1",
+        },
+        {
+          _id: 13,
+          author: "comment author 2",
+          description: "comment 2",
         },
       ],
     },
@@ -67,6 +75,7 @@ export default function Feed(props) {
         onPress={() =>
           props.navigation.navigate(ScreenRoutes.PostForm, {
             post: defaultValues,
+            formTitle: "Create a New Post",
           })
         }
       >

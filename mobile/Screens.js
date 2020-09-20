@@ -14,6 +14,7 @@ import PostDetail from "./screens/PostDetail";
 import UserPosts from "./screens/UserPosts";
 import UserComments from "./screens/UserComments";
 import PostForm from "./screens/PostForm";
+import CommentForm from "./screens/CommentForm";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -72,6 +73,10 @@ function FeedStackScreen() {
       <FeedStack.Screen name={ScreenRoutes.PostForm} component={PostForm} />
       <FeedStack.Screen name={ScreenRoutes.Post} component={PostStackScreen} />
       <FeedStack.Screen name={ScreenRoutes.PostDetail} component={PostDetail} />
+      <FeedStack.Screen
+        name={ScreenRoutes.CommentForm}
+        component={CommentForm}
+      />
     </FeedStack.Navigator>
   );
 }

@@ -52,9 +52,9 @@ export default function CommentForm(props) {
                 <View style={styles.form}>
                   <TextInput
                     mode="outlined"
-                    label="description"
+                    label="Description"
                     type="text"
-                    onChange={handleChange("description")}
+                    onChangeText={handleChange("description")}
                     onBlur={handleBlur("description")}
                     value={values.description}
                     name="description"

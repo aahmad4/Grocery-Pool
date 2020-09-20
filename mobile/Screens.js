@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -19,12 +19,15 @@ import UserComments from "./screens/UserComments";
 import PostForm from "./screens/PostForm";
 import { checkAuthStatus } from "./utils/checkAuthStatus";
 import CommentForm from "./screens/CommentForm";
+import { AuthenticationContext } from "./App";
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Screens(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticationContext
+  );
 
   useEffect(() => {
     // check in localStorage (asyncStorage) if JWT, User or anything exists

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import {
   Surface,
@@ -16,8 +16,18 @@ const defaultComment = {
 };
 
 export default function PostDetail(props) {
-  const author = "author 2"; /* Corresponds to current user */
-  /* TODO:  Call backend API with postID as a parameter */
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    let data = getPosts();
+    setPosts(data);
+  }, []);
+
+  useEffect(() => {
+    getSelfUser().then((selfUser) => {
+      if (selfUser === null) navigation.navigate(ScreenRoutes.Auth);
+      else setUser(selfUser);
+    });
+  }, []);
   const post = props.route.params.post;
   return (
     <Layout navigation={props.navigation}>
@@ -26,21 +36,22 @@ export default function PostDetail(props) {
         <Card.Content>
           <Paragraph>{post.description}</Paragraph>
         </Card.Content>
-        {/* {post.author == author ? () : null} */}
-        <Card.Actions>
-          <Button
-            mode="contained"
-            onPress={() =>
-              props.navigation.navigate(ScreenRoutes.PostForm, {
-                post: post,
-                formTitle: "Edit Post",
-              })
-            }
-          >
-            Edit
-          </Button>
-          <Button mode="contained">Delete</Button>
-        </Card.Actions>
+        {post.author == user ? (
+          <Card.Actions>
+            <Button
+              mode="contained"
+              onPress={() =>
+                props.navigation.navigate(ScreenRoutes.PostForm, {
+                  post: post,
+                  formTitle: "Edit Post",
+                })
+              }
+            >
+              Edit
+            </Button>
+            <Button mode="contained">Delete</Button>
+          </Card.Actions>
+        ) : null}
       </Card>
       {/* TO DO: Display Posts Comments*/}
       <Button

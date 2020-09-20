@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
 import Layout from "../components/Layout";
 import { useNavigation } from "@react-navigation/native";
@@ -12,6 +12,9 @@ import {
   Button,
 } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
+import { getSelfUser } from "../utils/getSelfUser";
+import { createNewPost } from "../api/posts";
+import mongoose from "mongoose";
 
 const PostCreateSchema = Yup.object().shape({
   title: Yup.string()
@@ -27,7 +30,14 @@ const PostCreateSchema = Yup.object().shape({
 
 export default function PostForm(props) {
   const navigation = useNavigation();
-  const author = "author"; /* logged in UserID*/
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    getSelfUser().then((selfUser) => {
+      if (selfUser === null) navigation.navigate(ScreenRoutes.Auth);
+      else setUser(selfUser);
+    });
+  }, []);
   const post = props.route.params.post;
   const formTitle = props.route.params.formTitle;
 
@@ -38,12 +48,10 @@ export default function PostForm(props) {
         <Surface style={styles.formContainer}>
           <Formik
             onSubmit={(values) => {
-              /**
-               * Call Create Post API
-               */
-              console.log(values);
+              values.isAuthenticated = true;
+              createNewPost(values);
             }}
-            validationSchema={PostCreateSchema}
+            // validationSchema={PostCreateSchema}
             initialValues={{
               title: post.title ? post.title : "",
               description: post.description ? post.description : "",

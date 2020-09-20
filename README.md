@@ -10,6 +10,8 @@ A mobile application that helps limit social interaction outside by allowing ind
 
 ## Screenshots
 
+Home screen with live feed of posts made by shoppers
+
 <p align="center">
   <img src="grocery_pool_feed.jpg" height="640px" width="360px">
 </p>

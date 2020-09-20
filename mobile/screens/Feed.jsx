@@ -14,6 +14,7 @@ import { View, StyleSheet } from "react-native";
 import { getSelfUser } from "../utils/getSelfUser";
 import NativeIcon from "../components/NativeIcon";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { getPosts } from "../api/posts";
 
 const defaultValues = {
   title: "",
@@ -74,9 +75,8 @@ export default function Feed(props) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    /**
-     * Fetch Posts from API here
-     */
+    let data = getPosts();
+    setPosts(data);
   }, []);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function Feed(props) {
       else setUser(selfUser);
     });
   }, []);
-  /*TODO: Call backend API to populate all posts*/
+
   return (
     <Layout navigation={props.navigation}>
       <View style={styles.initialContainer}>

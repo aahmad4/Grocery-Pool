@@ -13,23 +13,19 @@ const isLoggedIn = (request, response, next) => {
 
 router.post("/register", (req, res) => {
   console.log("registering user");
-  const { username, password, name, email, address } = req.body;
+  const { username, password, email } = req.body;
   // const {street, city, state, postalCode } = address;
   console.log(req.body);
   // console.log(password);
   // Creates and saves a new user with a salt and hashed password
-  User.register(
-    new User({ username, email, address }),
-    password,
-    (err, user) => {
-      if (err) {
-        console.log("Error: " + err);
-        return res.status(500).json({ error: err });
-      } else {
-        return res.json({ user: user });
-      }
+  User.register(new User({ username, email }), password, (err, user) => {
+    if (err) {
+      console.log("Error: " + err);
+      return res.status(500).json({ error: err });
+    } else {
+      return res.json({ user: user });
     }
-  );
+  });
 });
 
 router.post("/login", passport.authenticate("local"), (req, res) => {

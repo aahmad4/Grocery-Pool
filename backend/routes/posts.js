@@ -98,7 +98,7 @@ router.delete("/:id", checkOwnership, (req, res) => {
 });
 
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated) {
     return next();
   } else {
     console.log("Error: Please login first!");
@@ -106,7 +106,7 @@ function isLoggedIn(req, res, next) {
 }
 
 function checkOwnership(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated) {
     Post.findById(req.params.id, (err, foundPost) => {
       if (err) {
         console.log("Error: " + err);

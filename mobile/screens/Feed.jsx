@@ -7,10 +7,12 @@ import {
   Card,
   Title,
   Paragraph,
+  Avatar,
 } from "react-native-paper";
 import Post from "./Post";
 import { useNavigation } from "@react-navigation/native";
 import { ScreenRoutes } from "../ScreenRoutes";
+import { View } from "react-native";
 
 const defaultValues = {
   title: "",
@@ -50,6 +52,15 @@ export default function Feed(props) {
 
   return (
     <Layout navigation={props.navigation}>
+      <Surface>
+        <View>
+          <Text>Hi Adam</Text>
+          <Text>Keep your groceries in check</Text>
+        </View>
+        <View>
+          <Avatar.Image size={40} source={require("../assets/person.jpg")} />
+        </View>
+      </Surface>
       <Button
         mode="contained"
         compact

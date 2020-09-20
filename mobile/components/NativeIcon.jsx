@@ -1,9 +1,8 @@
 import React from "react";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { View } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialIcons";
 
 function NativeIcon(props) {
-  return <Icon name={props.name} size={props.size} />;
+  return <MaterialCommunityIcons name={props.name} size={props.size} />;
 }
 
 export default NativeIcon;

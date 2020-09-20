@@ -29,11 +29,12 @@ export default function PostForm(props) {
   const navigation = useNavigation();
   const author = "author"; /* logged in UserID*/
   const post = props.route.params.post;
+  const formTitle = props.route.params.formTitle;
 
   return (
     <Layout navigation={props.navigation}>
       <Surface style={styles.container}>
-        <Title style={styles.title}>Create an account</Title>
+        <Title style={styles.title}>{formTitle}</Title>
         <Surface style={styles.formContainer}>
           <Formik
             onSubmit={(values) => {

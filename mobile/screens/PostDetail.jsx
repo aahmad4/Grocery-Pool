@@ -9,6 +9,7 @@ import {
   Paragraph,
 } from "react-native-paper";
 import { ScreenRoutes } from "../ScreenRoutes";
+import Comment from "./Comment";
 
 export default function PostDetail(props) {
   const author = "author 2"; /* Corresponds to current user */
@@ -26,7 +27,10 @@ export default function PostDetail(props) {
           <Button
             mode="contained"
             onPress={() =>
-              props.navigation.navigate(ScreenRoutes.PostForm, { post: post })
+              props.navigation.navigate(ScreenRoutes.PostForm, {
+                post: post,
+                formTitle: "Edit Post",
+              })
             }
           >
             Edit
@@ -35,6 +39,9 @@ export default function PostDetail(props) {
         </Card.Actions>
       </Card>
       {/* TO DO: Display Posts Comments*/}
+      {post.comments.map((comment) => (
+        <Comment data={comment} key={comment._id} />
+      ))}
     </Layout>
   );
 }
